@@ -2,16 +2,15 @@
 module.exports = function(app, passport) {
 
   // =====================================
-  // HOME PAGE (with login links) ========
+  // HOME PAGE ===========================
   // =====================================
   app.get('/', function(req, res) {
-    res.render('index.pug', { title : 'Node Authentication'}); // load the index.pug file
+    res.render('index.pug', { title : 'Node Authentication'});
   });
 
   // =====================================
   // LOGIN ===============================
   // =====================================
-  // show the login form
   app.get('/login', function(req, res) {
 
     // render the page and pass in any flash data if it exists
@@ -29,7 +28,8 @@ module.exports = function(app, passport) {
   app.get('/signup', function(req, res) {
 
     // render the page and pass in any flash data if it exists
-    res.render('signup.pug', { message : req.flash('signupMessage') });
+    res.render('signup.pug', { title : 'Node Authentication', 
+                               message : req.flash('signupMessage') });
   });
 
   // process the signup form
