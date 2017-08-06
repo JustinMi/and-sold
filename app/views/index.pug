@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(class='container')
+    div(class='jumbotron text-center')
+      h1 
+        span(class='fa fa-lock')
+          | Node Authentication
+
+      p Login or Register With:
+
+      a(href='/login' class='btn btn-default')
+        span(class='fa fa-user')
+          | Local Login
+
+      a(href='/signup' class='btn btn-default')
+        span(class='fa fa-user')
+          | Local Signup
