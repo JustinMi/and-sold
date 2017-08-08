@@ -7,11 +7,13 @@ block content
         span(class='fa fa-sign-in')
           | Login
 
+      // Show any messages that come back with authentication
       if message.length > 0
         div(class='alert alert-danger')
           = message
 
-      form(action='login' method='post')
+      // Login Form
+      form(action='/login' method='post')
         div(class='form-group')
           label Email
           input(type="text" class="form-control" name="email")
@@ -23,6 +25,7 @@ block content
 
       hr
 
+      // Footer
       p 
         | Need an account? 
         a(href='/signup') Signup
@@ -31,6 +34,3 @@ block content
         | Or go 
         a(href='/') home
         | .
-
-
-
