@@ -28,8 +28,8 @@ mongoose.connect('mongodb://localhost/and-sold');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-// pass passport for configuration. Uncomment when ready
-//require('./config/passport')(passport); 
+// pass passport for configuration
+require('./config/passport')(passport); 
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

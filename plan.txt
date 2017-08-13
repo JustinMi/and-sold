@@ -41,5 +41,10 @@ Web Framework:
 Database:
     - MongoDB: again, not sure why, but seems pretty standard
 
-
+TODO:
+    1. Create users and set up database
+        - authentication: ensuring users are really who they claim to be
+        - authorization: getting permission from users to use their data (do we need this?)
+        a. save in database
+    2. Create unique room IDs
 

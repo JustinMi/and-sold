@@ -19,7 +19,11 @@ module.exports = function(app, passport) {
   });
 
   // process the login form
-  // app.post('/login', do all our passport stuff here);
+  app.post('/login', passport.authenticate('local-login', {
+    successRedirect : '/profile',
+    failureRedirect : '/login',
+    failureFlash : true,
+  }));
 
   // =====================================
   // SIGNUP ==============================
@@ -31,6 +35,13 @@ module.exports = function(app, passport) {
     res.render('signup.pug', { title : 'Node Authentication', 
                                message : req.flash('signupMessage') });
   });
+
+  // use the 'local-signup' strategy to process the signup form
+  app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/profile',
+    failureRedirect : '/signup',
+    failureFlash : true,
+  }));
 
   // process the signup form
   // app.post('/signup', do all our passport stuff here);
