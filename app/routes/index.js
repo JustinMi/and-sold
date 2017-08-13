@@ -15,7 +15,7 @@ module.exports = function(app, passport) {
 
     // render the page and pass in any flash data if it exists
     res.render('login.pug', { title : 'Node Authentication', 
-                              message : req.flash('loginMessage') }); 
+                                          message : req.flash('loginMessage') }); 
   });
 
   // process the login form
@@ -33,7 +33,7 @@ module.exports = function(app, passport) {
 
     // render the page and pass in any flash data if it exists
     res.render('signup.pug', { title : 'Node Authentication', 
-                               message : req.flash('signupMessage') });
+                                             message : req.flash('signupMessage') });
   });
 
   // use the 'local-signup' strategy to process the signup form
