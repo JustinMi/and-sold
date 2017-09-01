@@ -1,14 +1,7 @@
 # Overview
 
 ## What is it?
-
-- lightweight auction room generator for peer-to-peer transations 
-- users selling stuff on Craigslist, FB markets, or other sites without buyer power can instantiate an auction room for a specific item, which carries a unique link on the site
-    - they post the link with whatever they are trying to sell
-    - interested buyers click on the link, and provide a source of contact (SMS, email) for updates
-        - they make bids on the item
-        - buyers and sellers get updated on price changes
-    - seller can raise or lower the price of the item
+and-sold is a lightweight auction room generator for peer-to-peer transactions. Users selling items on Craigslist, Facebook marketplaces, or other sites without seller power or leverage can instantiate an auction room for a specific item, which carries a unique link on the site. They then post the link with whatever they are trying to sell, and interested buyers click on the link to make bids on the item. This app allows sellers to organize all interested buyers, and gain leverage in the final selling price if the item is popular or not popular. 
 
 ## Auction Room
 
