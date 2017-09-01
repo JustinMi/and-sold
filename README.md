@@ -1,4 +1,4 @@
-### Overview
+# Overview
 
 ## What is it?
 
@@ -43,7 +43,7 @@
 
 - somehow connect the seller and the buyer after the auction is over
 
-# TODO:
+### TODO:
 
 1. Create users and set up database
     - authentication: ensuring users are really who they claim to be
