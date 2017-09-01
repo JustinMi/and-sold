@@ -1,6 +1,6 @@
-###Overview
+### Overview
 
-##What is it?
+## What is it?
 
 - lightweight auction room generator for peer-to-peer transations 
 - users selling stuff on Craigslist, FB markets, or other sites without buyer power can instantiate an auction room for a specific item, which carries a unique link on the site
@@ -10,7 +10,7 @@
         - buyers and sellers get updated on price changes
     - seller can raise or lower the price of the item
 
-    ##Auction Room
+## Auction Room
 
 - each auction room is for the auction of a single item
 - pictures and/or link to the original posting
@@ -23,7 +23,7 @@
 - list price
 - bids
 
-##Accounts
+## Accounts
 
 - managed using OAUTH, though regular account creation should be an option
     - somehow take advantage of Facebook?
@@ -32,30 +32,18 @@
 - update subscription preferences
 - private messages--potentially this can be the way to connect seller and buyer
 
-##Main page
+## Main page
 
 - description
-- main thing: a button to create an auction room 
+- main: a button to create an auction room 
 - a stream of recent sellings
     - "user 14143 just sold a lamp for $13"
 
-##Post-auction (TODO):
+## Post-auction (TODO):
 
 - somehow connect the seller and the buyer after the auction is over
 
-##Language:
-
-- node.js: can handle asynchronous events, also 
-
-##Web Framework:
-
-- Express: seems pretty standard across the industry (MEAN)
-
-##Database:
-
-- MongoDB: again, not sure why, but seems pretty standard
-
-##TODO:
+# TODO:
 
 1. Create users and set up database
     - authentication: ensuring users are really who they claim to be
