@@ -15,16 +15,16 @@ var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-// create Express app instance
-var app = express();
-
 // server setup
 var configDB = require('./config/database.js');
 
-// connect to server
-mongoose.connect('mongodb://localhost/and-sold');
+// create Express app instance
+var app = express();
 
-// view engine setup
+// connect to server
+var connection = mongoose.connect('mongodb://localhost/and-sold');
+
+// views engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -53,7 +53,7 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 // direct initial route paths
 app.use('/users', users);
-index(app, passport);
+index(app, passport, connection);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -77,4 +77,7 @@ app.listen(3000, function (req, res) {
   console.log("listening on port 3000");
 });
 
+console.log(app);
+
 module.exports = app;
+exports.mongoose = mongoose;

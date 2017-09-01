@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div(class='container')
+     div(class='col-sm-6 col-sm-offset-3')
+        h1
+          span(class='fa fa-gavel')
+            | Create a New Auction Room
+
+        // Show any messages that come back with authentication
+        if message.length > 0
+          div(class='alert alert-danger')
+            = message
+
+        form(action='/create-room' enctype="multipart/form-data" method='post')
+          div(class='form-group')
+            label Item Name
+            input(type="text" class="form-control" name="item_name")
+
+          div(class='form-group')
+            label Description
+            input(type="text" class="form-control" name="item_description")
+
+          div(class='form-group')
+            label Original Selling Page
+            input(type="text" class="form-control" name="orig_post")
+
+          div(class='form-group')
+            label Starting Bid
+            input(type="text" class="form-control" name="starting_bid")
+
+          div(class='form-group')
+            label End Date
+            input(type="date" class="form-control" name="end_date")
+
+          div(class='form-group')
+            label Photos (Select multiple with ctrl)
+            input(type="file" name="uploaded_image" multiple)
+
+          button(type="submit" class="btn btn-warning btn-lg") Create Room

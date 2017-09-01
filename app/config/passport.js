@@ -2,12 +2,16 @@
  *@fileoverview: This module handles login and signup through Passport, and configures the 
  *     Strategy for local, Facebook, and Google
  * Strategies are various authentication mechanisms (OAuth, local, etc.)
- * @doc passport-local: https://github.com/jaredhanson/passport-local
  * @doc Passport: http://passportjs.org/docs
+ * @doc passport-local: https://github.com/jaredhanson/passport-local
+ * @doc passport-facebook: https://github.com/jaredhanson/passport-facebook
  */
 
 var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+
 var User = require('../models/user');
+var authConfig = require('./auth');
 
 /**
  * Configures the Passport object passed in
@@ -43,6 +47,14 @@ module.exports = function(passport) {
       passwordField : 'password',
       passReqToCallback : true // passes the entire request to the callback
     },
+
+    /**
+     * A `verify` callback, which takes in the following parameters and calls `done` providing a user object
+     * @param {Object} req: request object
+     * @param {String} email: the entered email
+     * @param {String} password: the entered password
+     * @param {Function} done: the callback to be executed 
+     */
     function(req, email, password, done) {
       process.nextTick(function() {  // async, so User.findOne will wait one tick for data to be sent back before firing
         User.findOne({'local.email' : email}, function(err, user) { // attempts to find User with matching email
@@ -75,6 +87,14 @@ module.exports = function(passport) {
       passwordField : 'password',
       passReqToCallback : true // passes the entire request to the callback
     },
+
+    /**
+     * A `verify` callback, which takes in the following parameters and calls `done` providing a user object
+     * @param {Object} req: request object
+     * @param {String} email: the entered email
+     * @param {String} password: the entered password
+     * @param {Function} done: the callback to be executed 
+     */
     function(req, email, password, done) {
       User.findOne({'local.email' : email}, function(err, user) {
         if (err) {
@@ -86,6 +106,49 @@ module.exports = function(passport) {
         } else { // else, return the user
           return done(null, user);
         }
+      });
+    })
+  );
+
+  // =========================================================================
+  // FACEBOOK ===============================================================
+  // =========================================================================
+  // configure passport to use FacebookStrategy
+  passport.use(new FacebookStrategy( {
+      clientID : authConfig.facebookAuth.clientID,
+      clientSecret : authConfig.facebookAuth.clientSecret,
+      callbackURL : authConfig.facebookAuth.callbackURL
+    },
+
+    /**
+     * A `verify` callback, which takes in the following parameters and calls `done` providing a user object
+     * @param {Object} token: the access token object
+     * @param {String} refreshToken: the refresh token object
+     * @param {String} profile: the authenticated user's profile, see Passport docs for details 
+     * @param {Function} done: the callback to be executed 
+     */
+    function(token, refreshToken, profile, done) {
+      process.nextTick(function() { // async, so User.findOne will wait one tick for data to be sent back before firing
+        User.findOne({'facebook.id' : profile.id}, function(err, user) { //TODO: consider findOrCreate
+          if (err) {
+            return done(err);
+          } else if (user) {
+            return done(null, user);
+          } else { // if there is no user found with that facebook id, create them
+            var newUser = new User(); 
+            newUser.facebook.id = profile.id;                 
+            newUser.facebook.token = token;
+            newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName; 
+            console.log(profile);
+            newUser.facebook.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+            console.log('hello');
+            newUser.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, newUser);
+            });
+          }
+        });
       });
     })
   );

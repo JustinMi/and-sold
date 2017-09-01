@@ -1,5 +1,11 @@
+/**
+ * @fileoverview configures the routes for the index page
+ * @docs connect-flash: https://github.com/jaredhanson/connect-flash
+ */
+var create_room_controller = require('../controllers/create_room')
+
 // app/index.js
-module.exports = function(app, passport) {
+module.exports = function(app, passport, connection) {
 
   // =====================================
   // HOME PAGE ===========================
@@ -9,13 +15,14 @@ module.exports = function(app, passport) {
   });
 
   // =====================================
-  // LOGIN ===============================
+  // LOCAL LOGIN =========================
   // =====================================
   app.get('/login', function(req, res) {
-
     // render the page and pass in any flash data if it exists
-    res.render('login.pug', { title : 'Node Authentication', 
-                                          message : req.flash('loginMessage') }); 
+    res.render('login.pug', {
+      title : 'Node Authentication', 
+      message : req.flash('loginMessage') 
+    }); 
   });
 
   // process the login form
@@ -26,14 +33,15 @@ module.exports = function(app, passport) {
   }));
 
   // =====================================
-  // SIGNUP ==============================
+  // LOCAL SIGNUP ========================
   // =====================================
   // show the signup form
   app.get('/signup', function(req, res) {
-
     // render the page and pass in any flash data if it exists
-    res.render('signup.pug', { title : 'Node Authentication', 
-                                             message : req.flash('signupMessage') });
+    res.render('signup.pug', { 
+      title : 'Node Authentication', 
+      message : req.flash('signupMessage') 
+    });
   });
 
   // use the 'local-signup' strategy to process the signup form
@@ -43,8 +51,19 @@ module.exports = function(app, passport) {
     failureFlash : true,
   }));
 
-  // process the signup form
-  // app.post('/signup', do all our passport stuff here);
+  // =====================================
+  // FACEBOOK ROUTES ===================
+  // =====================================
+  // route for facebook authentication and login
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+  // handle the callback after facebook has authenticated the user
+  app.get('/auth/facebook/callback',
+    passport.authenticate('facebook', {
+      successRedirect : '/profile',
+      failureRedirect : '/'
+    })
+  );
 
   // =====================================
   // PROFILE SECTION =====================
@@ -56,6 +75,21 @@ module.exports = function(app, passport) {
       user : req.user // get the user out of session and pass to template
     });
   });
+
+  // =====================================
+  // ROOM CREATION ======================
+  // =====================================
+app.get('/create-room', function(req, res, next) {
+  res.render('create-room.pug', {
+    title : 'Node Authentication', 
+    message : req.flash('inputError')
+  });
+});
+
+app.post('/create-room', function (req, res, next) {
+  create_room_controller.create_room_post(req, res, next, connection);
+});
+
 
   // =====================================
   // LOGOUT ==============================
